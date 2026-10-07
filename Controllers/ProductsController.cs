@@ -32,6 +32,9 @@ namespace Puy_Midterm_Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
+            // Default null Description to empty string to avoid SQLite NOT NULL constraint error
+            product.Description ??= string.Empty;
+
             if (ModelState.IsValid)
             {
                 _context.Add(product);
@@ -58,6 +61,9 @@ namespace Puy_Midterm_Store.Controllers
         public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.Id) return NotFound();
+
+            // Default null Description to empty string to avoid SQLite NOT NULL constraint error
+            product.Description ??= string.Empty;
 
             if (ModelState.IsValid)
             {
